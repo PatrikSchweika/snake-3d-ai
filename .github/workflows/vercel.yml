@@ -11,8 +11,12 @@ concurrency:
   group: vercel-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 env:
   NODE_VERSION: '24'
+  VITE_THEME_MUSIC_URL: ${{ vars.VITE_THEME_MUSIC_URL || secrets.VITE_THEME_MUSIC_URL }}
 
 jobs:
   checks:
@@ -38,6 +42,14 @@ jobs:
       - name: Run build
         run: npm run build
 
+      - name: Upload dist artifact
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ github.sha }}
+          path: dist
+          if-no-files-found: error
+
   deploy-preview:
     name: Deploy Preview
     runs-on: ubuntu-latest
@@ -51,23 +63,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: npm
+          name: dist-${{ github.sha }}
+          path: dist
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Pull Vercel environment
-        run: npx vercel@latest pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Build Vercel output
-        run: npx vercel@latest build --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Prepare Vercel static output
+        run: |
+          mkdir -p .vercel/output/static
+          cp -R dist/. .vercel/output/static/
+          printf '{\n  "version": 3\n}\n' > .vercel/output/config.json
 
       - name: Deploy preview to Vercel
-        run: npx vercel@latest deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        run: npx vercel@latest deploy --prebuilt --archive=tgz --token=${{ secrets.VERCEL_TOKEN }}
 
   deploy-production:
     name: Deploy Production
@@ -82,20 +91,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: npm
+          name: dist-${{ github.sha }}
+          path: dist
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Pull Vercel environment
-        run: npx vercel@latest pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Build Vercel output
-        run: npx vercel@latest build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Prepare Vercel static output
+        run: |
+          mkdir -p .vercel/output/static
+          cp -R dist/. .vercel/output/static/
+          printf '{\n  "version": 3\n}\n' > .vercel/output/config.json
 
       - name: Deploy production to Vercel
-        run: npx vercel@latest deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: npx vercel@latest deploy --prebuilt --prod --archive=tgz --token=${{ secrets.VERCEL_TOKEN }}
