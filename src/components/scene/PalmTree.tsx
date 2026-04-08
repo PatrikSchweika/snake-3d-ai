@@ -1,3 +1,5 @@
+import { PalmFire } from './PalmFire'
+
 type PalmTreeProps = {
   position: [number, number, number]
   scale?: number
@@ -34,9 +36,11 @@ export function PalmTree({ position, scale = 1, rotationY = 0 }: PalmTreeProps) 
           rotation={[x, y, z]}
         >
           <coneGeometry args={[0.18, 1.75, 4]} />
-          <meshStandardMaterial color={0x2f7c42} emissive={0x14351c} roughness={0.88} />
+          <meshStandardMaterial color={0x37271c} emissive={0x5a260a} roughness={0.92} />
         </mesh>
       ))}
+
+      <PalmFire />
     </group>
   )
 }
