@@ -1,0 +1,18 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="256" height="256" rx="64" fill="#07111F"/>
+  <rect x="28" y="28" width="200" height="200" rx="48" fill="url(#panel)"/>
+  <path d="M80 100C80 77.9086 97.9086 60 120 60H144C166.091 60 184 77.9086 184 100V102C184 124.091 166.091 142 144 142H112C98.7452 142 88 152.745 88 166C88 179.255 98.7452 190 112 190H168" stroke="url(#snake)" stroke-width="24" stroke-linecap="round"/>
+  <circle cx="167" cy="190" r="18" fill="#FF8E3C"/>
+  <circle cx="158" cy="92" r="4.5" fill="#07111F"/>
+  <circle cx="174" cy="92" r="4.5" fill="#07111F"/>
+  <defs>
+    <linearGradient id="panel" x1="128" y1="28" x2="128" y2="228" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0C2340"/>
+      <stop offset="1" stop-color="#07111F"/>
+    </linearGradient>
+    <linearGradient id="snake" x1="80" y1="60" x2="184" y2="190" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7CFCB2"/>
+      <stop offset="1" stop-color="#28D7A1"/>
+    </linearGradient>
+  </defs>
+</svg>

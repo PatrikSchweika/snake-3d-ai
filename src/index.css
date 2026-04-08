@@ -1,0 +1,39 @@
+:root {
+  font-family: Georgia, 'Trebuchet MS', serif;
+  color: #fff6e8;
+  background:
+    radial-gradient(circle at top left, rgba(255, 202, 129, 0.34), transparent 26%),
+    radial-gradient(circle at top right, rgba(82, 142, 85, 0.22), transparent 24%),
+    linear-gradient(160deg, #8d6137 0%, #cc9158 42%, #4f3b28 100%);
+  color-scheme: dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
