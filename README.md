@@ -9,6 +9,18 @@ A 3D snake game built on the official Vite `react-ts` scaffold, using React, Typ
 - `npm run build`
 - `npm run lint`
 
+## Music Configuration
+
+Background music is loaded from `VITE_THEME_MUSIC_URL`.
+
+Local development:
+- create `.env.local`
+- set `VITE_THEME_MUSIC_URL=https://your-public-music-url`
+
+Vercel:
+- add `VITE_THEME_MUSIC_URL` to your Preview and Production environment variables
+- the existing GitHub Actions workflow already uses `vercel pull`, so the build should receive that env var automatically
+
 ## GitHub Actions + Vercel
 
 The workflow at `.github/workflows/vercel.yml` runs `lint` and `build` on pull requests and pushes.

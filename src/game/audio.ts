@@ -8,7 +8,7 @@ type SynthController = {
   setSceneState: (phase: GamePhase) => void
 }
 
-const MUSIC_PATH = '/music/theme.mp3'
+const MUSIC_URL = import.meta.env.VITE_THEME_MUSIC_URL?.trim()
 
 export const createSynth = (): SynthController => {
   let audioContext: AudioContext | null = null
@@ -17,12 +17,12 @@ export const createSynth = (): SynthController => {
   let musicElement: HTMLAudioElement | null = null
 
   const ensureMusicElement = () => {
-    if (typeof window === 'undefined') {
+    if (typeof window === 'undefined' || !MUSIC_URL) {
       return null
     }
 
     if (!musicElement) {
-      musicElement = new Audio(MUSIC_PATH)
+      musicElement = new Audio(MUSIC_URL)
       musicElement.loop = true
       musicElement.preload = 'auto'
       musicElement.volume = 0.01
