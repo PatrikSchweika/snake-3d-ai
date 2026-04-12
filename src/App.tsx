@@ -6,5 +6,6 @@ export default function App() {
     <main className="app-shell">
       <SnakeGame />
     </main>
+      //asdfsf
   )
 }
